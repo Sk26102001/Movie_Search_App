@@ -7,5 +7,5 @@ export default defineConfig({
   plugins: [react(),
     tailwindcss()
   ],
-  base: '/Movie_Search_App/', 
+  base: '/', 
 })
