@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react';
 import {
   Autocomplete,
@@ -5,9 +6,11 @@ import {
   InputAdornment,
   IconButton,
   CircularProgress,
+  Box,
 } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import axios from 'axios';
+import { Typewriter } from 'react-simple-typewriter';
 
 const API_KEY = import.meta.env.VITE_OMDB_API_KEY;
 
@@ -55,22 +58,58 @@ function SearchBar({ query, onChange, onSearch, onSelect }) {
   return (
     <Autocomplete
       freeSolo
-      options={suggestions.map((option) => option.Title)}
+      autoHighlight
+      options={suggestions}
+      getOptionLabel={(option) =>
+        typeof option === 'string'
+          ? option
+          : `${option.Title} (${option.Year})`
+      }
       onInputChange={(event, newInputValue) => {
         if (event) {
           onChange({ target: { value: newInputValue } });
         }
       }}
       onChange={(event, value) => {
-        if (value) {
-          onChange({ target: { value } }); // update query
-          onSelect(); // automatically search
+        if (typeof value === 'string') {
+          onChange({ target: { value } });
+          onSelect();
+        } else if (value?.Title) {
+          onChange({ target: { value: value.Title } });
+          onSelect();
         }
       }}
+      renderOption={(props, option) => (
+        <Box component="li" {...props}>
+          <img
+            loading="lazy"
+            width="40"
+            src={option.Poster !== 'N/A' ? option.Poster : '/fallback.jpg'}
+            alt=""
+            style={{ marginRight: 8 }}
+          />
+          {option.Title} ({option.Year})
+        </Box>
+      )}
       renderInput={(params) => (
         <TextField
           {...params}
-          label="Search Movies"
+          label={
+            <Typewriter
+              words={[
+                'Search Iron Man...',
+                'Search Avengers...',
+                'Search Interstellar...',
+                'Search Dhoom...',
+              ]}
+              loop={true}
+              cursor
+              cursorStyle="|"
+              typeSpeed={70}
+              deleteSpeed={50}
+              delaySpeed={1500}
+            />
+          }
           variant="outlined"
           fullWidth
           value={query}

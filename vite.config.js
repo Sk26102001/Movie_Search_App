@@ -3,5 +3,5 @@ import react from '@vitejs/plugin-react'
 
 export default defineConfig({
   plugins: [react()],
-  base: '/movie-app/', 
+  base: '/Movie_Search_App/', 
 })

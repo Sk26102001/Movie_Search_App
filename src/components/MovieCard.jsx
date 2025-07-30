@@ -55,3 +55,4 @@ function MovieCard({ title, poster, releaseDate, onClick, imdbID, movieData }) {
 }
 
 export default MovieCard;
+
