@@ -66,12 +66,20 @@ export default function MovieDetailModal({ imdbID, open, onClose }) {
       fullWidth
     >
       <Box sx={{ position: 'relative', p: 2 }}>
-        <IconButton
+        {/* <IconButton
           onClick={onClose}
           sx={{ position: 'absolute', top: 8, right: 8 }}
         >
           <CloseIcon />
-        </IconButton>
+        </IconButton> */}
+        <IconButton
+  onClick={onClose}
+  sx={{ position: 'absolute', top: 8, right: 8, zIndex: 10 }}
+>
+  <CloseIcon />
+  {/* <Typography variant="body2">X</Typography> */}
+</IconButton>
+
 
         <DialogTitle sx={{ pr: 5 }}>
           {details?.Title || 'Loading...'}
